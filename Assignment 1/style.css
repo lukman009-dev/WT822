@@ -1,0 +1,14 @@
+ body{
+                width: 800px;
+                margin: 60px auto;
+                font-family: 'Times New Roman', Times, serif;
+            }
+            .table{
+                width: 100%;
+                margin: 20px auto;
+            }
+            h4{
+                display: flex;
+                justify-content: space-between;
+            }
+            
