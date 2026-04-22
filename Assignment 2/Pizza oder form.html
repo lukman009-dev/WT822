@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html></html>
+<head>
+    <title>
+        Form1 | Pizza Ordering Form
+    </title>
+</head>
+<body >
+   <form>
+    <fieldset>
+    <legend><h3>PIZZA ORDER FORM</h3></legend>
+    <fieldset>
+        <legend>Delivery Address</legend>
+        <div style="display: flex;gap: 20px;">
+        <label>Full Name:  </label><input type="text" placeholder="Fulname">
+        <label>Street Address: </label><input type="text" placeholder="Address">
+        </div>
+        <br>
+        <div style="display: flex;gap: 20px;">
+            <label>Phone: </label> <input type="tel" placeholder="Phone">
+            <label>Email:</label><input type="email" placeholder="Email">
+        </div>
+        <br>
+        <div style="display: flex;gap: 20px;">
+            <label>Password:  </label><input type="password" placeholder="Password">
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Payment Information</legend>
+        <div style="display: flex;gap: 20px;">
+            <label>Card Type:</label>
+            <select>
+                <option>Mastercard</option>
+                <option>Visa card</option>
+                <option>Discover</option>
+            </select>
+            <label>Card number: </label><input type="number" placeholder="Card number">
+        </div>
+        <br>
+        <div style="display: flex;gap: 20px;">
+            <label>Name of card: </label><input type="text" placeholder="name">
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Customize your Pizza</legend>
+        <div style="display: flex;gap: 20px;">
+            <label>Pizza size:  </label>
+            <select>
+                <option>large</option>
+                <option>medium</option>
+                <option>small</option>
+            </select>
+            <label>Quatity: </label><input type="number">
+        </div>
+        <br>
+        <div style="display: flex;gap: 20px;">
+            <label>Spices:   </label>
+            <label>Black pepper</label><input type="checkbox">
+            <label>Bell peppers</label><input type="checkbox">
+            <label>mayonnaise</label><input type="checkbox">
+        </div>
+        <br>
+        <div>
+            <label>Other Requirement: </label><textarea placeholder="Any other requirement"></textarea>
+
+            <label>Meat: </label>
+            <label>Fish</label><input type="radio">
+            <label>Cow</label><input type="radio">
+            <label>Chicken</label><input type="radio">
+        </div>
+    </fieldset>
+    <br>
+    <div style="display: flex;gap: 20px;">
+        <button type="reset">Clear order</button>
+        <button type="submit">Place order</button>
+    </div>
+    </fieldset>
+   </form>
+</body>
