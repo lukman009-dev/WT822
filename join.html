@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>ZanFix | Jiunge kama Mfanyabiashara - Tangaza Biashara Yako</title>
+    <!-- Bootstrap 5 + Icons + Fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            color: #eaeaea;
+            min-height: 100vh;
+        }
+        :root {
+            --fix-accent: #c49a6c;
+            --fix-accent-dark: #a57c52;
+            --fix-accent-glow: rgba(196, 154, 108, 0.2);
+            --bg-card: #121212;
+            --border-color: rgba(196, 154, 108, 0.2);
+        }
+        /* Hero */
+        .hero-partner {
+            background: linear-gradient(120deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 100%), 
+                        url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1600');
+            background-size: cover;
+            background-position: center;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+        }
+        .hero-partner h1 { font-size: 3rem; font-weight: 800; margin-bottom: 20px; }
+        .hero-partner .highlight { color: var(--fix-accent); }
+        .hero-partner p { font-size: 1.2rem; opacity: 0.9; max-width: 700px; margin: 0 auto; }
+        /* Form Card */
+        .form-card {
+            background: var(--bg-card);
+            border-radius: 32px;
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            margin-top: -60px;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .form-card h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 10px; }
+        .form-card h2 i { color: var(--fix-accent); margin-right: 10px; }
+        .form-label { font-weight: 600; margin-bottom: 8px; color: var(--fix-accent); }
+        .form-control, .form-select {
+            background: #1e1e1e;
+            border: 1px solid var(--border-color);
+            color: #eaeaea;
+            border-radius: 16px;
+            padding: 12px 16px;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            background: #252525;
+            border-color: var(--fix-accent);
+            box-shadow: 0 0 0 3px var(--fix-accent-glow);
+            color: #eaeaea;
+        }
+        .business-type-card {
+            background: #1e1e1e;
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .business-type-card:hover, .business-type-card.selected {
+            border-color: var(--fix-accent);
+            background: rgba(196, 154, 108, 0.1);
+        }
+        .business-type-card i { font-size: 2rem; color: var(--fix-accent); margin-bottom: 10px; }
+        .business-type-card h6 { margin-bottom: 5px; font-weight: 600; }
+        .business-type-input { display: none; }
+        .btn-submit {
+            background: var(--fix-accent);
+            color: #0a0a0a;
+            font-weight: 700;
+            padding: 14px 32px;
+            border-radius: 40px;
+            border: none;
+            width: 100%;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .btn-submit:hover:not(:disabled) {
+            background: var(--fix-accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px var(--fix-accent-glow);
+        }
+        .btn-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        .benefits-section { padding: 80px 0 60px; }
+        .benefit-card {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(18, 18, 18, 0.5);
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        .benefit-card:hover { transform: translateY(-5px); border-color: var(--fix-accent); }
+        .benefit-card i { font-size: 2.5rem; color: var(--fix-accent); margin-bottom: 15px; }
+        .form-check-input:checked { background-color: var(--fix-accent); border-color: var(--fix-accent); }
+        .form-check-input:focus { box-shadow: 0 0 0 3px var(--fix-accent-glow); }
+        .spinner-border-sm { width: 1.2rem; height: 1.2rem; }
+        /* toasts */
+        .toast-custom {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 1100;
+            background: #1e1e1e;
+            border-left: 5px solid var(--fix-accent);
+            color: #eaeaea;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        @media (max-width: 768px) {
+            .hero-partner h1 { font-size: 2rem; }
+            .form-card { padding: 25px; margin-top: -40px; }
+        }
+        .modal-content { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 28px; }
+        .btn-outline-accent {
+            border: 1px solid var(--fix-accent);
+            color: var(--fix-accent);
+            background: transparent;
+        }
+        .btn-outline-accent:hover { background: var(--fix-accent); color: #0a0a0a; }
+        a { text-decoration: none; color: var(--fix-accent); }
+        a:hover { color: var(--fix-accent-dark); }
+    </style>
+</head>
+<body>
+
+<section class="hero-partner">
+    <div class="container">
+        <h1>🤝 <span class="highlight">Tangaza biashara yako</span> - Pata wateja na ZanFix</h1>
+        <p>Fungua duka lako mtandaoni na kuonyesha bidhaa zako kwa mamia ya wateja</p>
+    </div>
+</section>
+
+<div class="container">
+    <div class="form-card">
+        <h2 class="text-center mb-2"><i class="fas fa-store"></i> Fomu ya Kujiunga</h2>
+        <p class="text-center text-secondary mb-4">Jaza taarifa zako na utakuwa mmoja wa wafanyabiashara wetu</p>
+        
+        <form id="partnerForm">
+            <!-- Jina Kamili -->
+            <div class="mb-4">
+                <label class="form-label"><i class="fas fa-user me-2"></i>Jina Kamili *</label>
+                <input type="text" class="form-control" name="fullname" id="fullname" required placeholder="Mfano: Ali Hassan Juma">
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label class="form-label"><i class="fas fa-phone me-2"></i>Namba ya Simu *</label>
+                    <input type="tel" class="form-control" name="phone" id="phone" required placeholder="+255 XXX XXX XXX">
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label class="form-label"><i class="fas fa-envelope me-2"></i>Barua pepe (Email) <span class="text-secondary">(siyo lazima)</span></label>
+                    <input type="email" class="form-control" name="email" id="email" placeholder="mfano@zanfix.com (optional)">
+                </div>
+            </div>
+            
+            <!-- Aina ya Ushirikiano -->
+            <div class="mb-4">
+                <label class="form-label"><i class="fas fa-briefcase me-2"></i>Unataka kujiunga kama? *</label>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="business-type-card" data-type="seller">
+                            <i class="fas fa-box"></i>
+                            <h6>Muuzaji (Seller)</h6>
+                            <p>Nauza bidhaa kwa wateja</p>
+                        </div>
+                        <input type="radio" name="business_type" value="seller" class="business-type-input" id="type_seller">
+                    </div>
+                    <div class="col-md-4">
+                        <div class="business-type-card" data-type="service">
+                            <i class="fas fa-tools"></i>
+                            <h6>Mtoa Huduma</h6>
+                            <p>Natoa huduma kwa wateja</p>
+                        </div>
+                        <input type="radio" name="business_type" value="service" class="business-type-input" id="type_service">
+                    </div>
+                    <div class="col-md-4">
+                        <div class="business-type-card" data-type="both">
+                            <i class="fas fa-handshake"></i>
+                            <h6>Zote (Both)</h6>
+                            <p>Nauza bidhaa na natoa huduma</p>
+                        </div>
+                        <input type="radio" name="business_type" value="both" class="business-type-input" id="type_both">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <label class="form-label"><i class="fas fa-store me-2"></i>Jina la Duka / Biashara yako *</label>
+                <input type="text" class="form-control" name="business_name" id="business_name" required placeholder="Mfano: Ali Electronics">
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label class="form-label"><i class="fas fa-map-marker-alt me-2"></i>Eneo / Location *</label>
+                    <input type="text" class="form-control" name="location" id="location" required placeholder="Mfano: Stone Town, Zanzibar">
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label class="form-label"><i class="fas fa-tag me-2"></i>Aina ya Bidhaa / Huduma *</label>
+                    <select class="form-select" name="category" id="category" required>
+                        <option value="" disabled selected>-- Chagua aina --</option>
+                        <option value="electronics">Electronics / Simu / Gadgets</option>
+                        <option value="fashion">Fashion / Mavazi</option>
+                        <option value="food">Food / Vyakula</option>
+                        <option value="repair">Repair / Urekebishaji</option>
+                        <option value="cleaning">Cleaning / Usafi</option>
+                        <option value="installation">Installation / Usakinishaji</option>
+                        <option value="decoration">Decoration / Mapambo</option>
+                        <option value="other">Nyinginezo</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="form-label"><i class="fas fa-info-circle me-2"></i>Maelezo mafupi kuhusu biashara yako *</label>
+                <textarea class="form-control" name="description" id="description" rows="4" required placeholder="Tupe maelezo kidogo kuhusu bidhaa au huduma unazotoa..."></textarea>
+            </div>
+            <div class="mb-4">
+                <label class="form-label"><i class="fab fa-whatsapp me-2"></i>Namba ya WhatsApp (kwa mawasiliano ya haraka)</label>
+                <input type="tel" class="form-control" name="whatsapp" id="whatsapp" placeholder="+255 XXX XXX XXX">
+                <small class="text-secondary">Tutakutumia taarifa muhimu kupitia WhatsApp</small>
+            </div>
+            <div class="mb-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="termsCheckbox" required>
+                    <label class="form-check-label" for="termsCheckbox">
+                        Nimesoma na nimekubali <a href="#" id="guidelinesLink">Miongozo</a> ya ZanFix. *
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn-submit" id="submitBtn">
+                <i class="fas fa-paper-plane me-2"></i> Wasilisha Maombi
+            </button>
+            <p class="text-center text-secondary mt-3 small">* Tutakujibu ndani ya masaa 24 ya kazi</p>
+        </form>
+    </div>
+    
+    <div class="benefits-section">
+        <div class="text-center mb-5">
+            <h3 class="fw-bold">Kwa nini ujiunge na <span style="color: var(--fix-accent);">ZanFix</span>?</h3>
+            <div class="mx-auto" style="width: 60px; height: 3px; background: var(--fix-accent); margin: 15px auto;"></div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4 col-6"><div class="benefit-card"><i class="fas fa-chart-line"></i><h5>Wateja Zaidi</h5><p>Fikia mamia ya wateja kila siku</p></div></div>
+            <div class="col-md-4 col-6"><div class="benefit-card"><i class="fas fa-mobile-alt"></i><h5>Rahisi Kutumia</h5><p>Duka lako linapatikana kwenye simu</p></div></div>
+            <div class="col-md-4 col-6"><div class="benefit-card"><i class="fas fa-headset"></i><h5>Msaada 24/7</h5><p>Timu yetu iko tayari kukusaidia</p></div></div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Success -->
+<div class="modal fade" id="successModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center">
+            <div class="modal-body p-5">
+                <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--fix-accent);"></i>
+                <h4 class="mt-3">Ombi lako limetumwa!</h4>
+                <p class="text-secondary mt-2">Asante kwa kujiunga na ZanFix. Tutakujumuisha kwa taarifa zaidi ndani ya masaa 24.</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-outline-accent rounded-pill px-4" data-bs-dismiss="modal">Sawa, nimeelewa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Notifications -->
+<div class="toast-custom p-3 d-none" id="liveToast" role="alert">
+    <div class="d-flex">
+        <div class="toast-body" id="toastMessage"><i class="fas fa-info-circle me-2"></i>Taarifa</div>
+        <button type="button" class="btn-close btn-close-white ms-auto me-0" data-bs-dismiss="toast" aria-label="Close" onclick="closeToast()"></button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // ---------- UI Helpers ----------
+    const businessCards = document.querySelectorAll('.business-type-card');
+    const businessInputs = document.querySelectorAll('.business-type-input');
+    const form = document.getElementById('partnerForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const termsCheck = document.getElementById('termsCheckbox');
+    const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+    const toastEl = document.getElementById('liveToast');
+    
+    // Business type selection
+    businessCards.forEach((card, idx) => {
+        card.addEventListener('click', () => {
+            businessCards.forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            if(businessInputs[idx]) businessInputs[idx].checked = true;
+        });
+    });
+    
+    // Helper: show toast notification
+    function showToast(message, isError = false) {
+        const toastMsg = document.getElementById('toastMessage');
+        toastMsg.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-check-circle'} me-2"></i>${message}`;
+        toastEl.classList.remove('d-none');
+        setTimeout(() => {
+            toastEl.classList.add('d-none');
+        }, 5000);
+    }
+    
+    function closeToast() {
+        toastEl.classList.add('d-none');
+    }
+    
+    // Loading spinner on button
+    function setLoading(loading) {
+        if(loading) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Inachakata...`;
+        } else {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `<i class="fas fa-paper-plane me-2"></i> Wasilisha Maombi`;
+        }
+    }
+    
+    // ----- Google Apps Script Web App URL -----
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby6GNWcLeJFSr4XFAGSTLl_aTdz5t6GGzR3m-51XKI_z9GhqmRBLQvlwm_tkN8gWirDLQ/exec";
+
+async function submitFormData(formDataObj) {
+    // Remove 'no-cors' mode to allow reading response
+    const response = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'cors',  // ✅ Changed from 'no-cors' to 'cors'
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formDataObj)
+    });
+    
+    // Check if response is OK
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const result = await response.json();
+    return result;
+}
+
+// Then in your form submit handler, update the duplicate check section:
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+        
+        // Validate required fields
+        const fullname = document.getElementById('fullname').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const businessName = document.getElementById('business_name').value.trim();
+        const location = document.getElementById('location').value.trim();
+        const category = document.getElementById('category').value;
+        const description = document.getElementById('description').value.trim();
+        
+        if(!fullname || !phone || !businessName || !location || !category || !description) {
+            showToast("Tafadhali jaza sehemu zote zenye nyota (*)", true);
+            return;
+        }
+        
+        let businessTypeSelected = false;
+        let selectedType = "";
+        for(let i=0; i<businessInputs.length; i++) {
+            if(businessInputs[i].checked) {
+                businessTypeSelected = true;
+                selectedType = businessInputs[i].value;
+                break;
+            }
+        }
+        if(!businessTypeSelected) {
+            showToast("Tafadhali chagua aina ya ushirikiano (Muuzaji / Mtoa Huduma / Zote)", true);
+            return;
+        }
+        
+        // Check Terms Checkbox (muongozo)
+        if(!termsCheck.checked) {
+            showToast("Lazima ukubali Miongozo ya ZanFix ili kuwasilisha ombi.", true);
+            return;
+        }
+        
+        // Optional email
+        const email = document.getElementById('email').value.trim();
+        const whatsapp = document.getElementById('whatsapp').value.trim();
+        
+        // Prepare data payload
+        const payload = {
+            fullname: fullname,
+            phone: phone,
+            email: email,   // optional allowed empty
+            business_type: selectedType,
+            business_name: businessName,
+            location: location,
+            category: category,
+            description: description,
+            whatsapp: whatsapp,
+            timestamp: new Date().toISOString(),
+            action: "register_partner"
+        };
+        
+        setLoading(true);
+    
+    try {
+        // Real fetch to Apps Script
+        const result = await submitFormData(payload);
+        setLoading(false);
+        
+        if(result && result.status === "duplicate") {
+            showToast(result.message || "Ombi hili tayari umeshatuma! Tuna data yako, tutakujibu ndani ya masaa 24.", true);
+        } else if(result && result.status === "success") {
+            successModal.show();
+            form.reset();
+            businessCards.forEach(c => c.classList.remove('selected'));
+            businessInputs.forEach(r => r.checked = false);
+            termsCheck.checked = false;
+            showToast("Ombi lako limetumwa kwa mafanikio! Asante kwa kujiunga.", false);
+        } else {
+            showToast(result?.message || "Hitilafu ya mtandao. Tafadhali jaribu tena baadaye.", true);
+        }
+        // Add this to your form submit handler to handle update responses
+if(result && result.status === "updated") {
+    // Show update success message
+    showToast(result.message, false);
+    
+    // Optional: Show update summary
+    if(result.updateCount) {
+        showToast(`Hii ni mara yako ya ${result.updateCount} kusasisha taarifa. Asante!`, false);
+    }
+    
+    // Reset form
+    form.reset();
+    businessCards.forEach(c => c.classList.remove('selected'));
+    businessInputs.forEach(r => r.checked = false);
+    termsCheck.checked = false;
+    
+} else if(result && result.status === "success") {
+    // New registration
+    if(result.businessId) {
+        showToast(`Usajili wako umefanikiwa! Namba yako: ${result.businessId}`, false);
+    }
+    successModal.show();
+    form.reset();
+    businessCards.forEach(c => c.classList.remove('selected'));
+    businessInputs.forEach(r => r.checked = false);
+    termsCheck.checked = false;
+}
+    } catch (error) {
+        console.error(error);
+        setLoading(false);
+        showToast("Kuna tatizo la mawasiliano. Hakikisha una mtandao mzuri na jaribu tena.", true);
+    }
+});
+    
+    // Small mock for demonstration if user doesn't have apps script yet, show note
+    if(APPS_SCRIPT_URL.includes("MOCK_PLACEHOLDER")) {
+        const infoNote = document.createElement('div');
+        infoNote.className = "alert alert-warning mt-3 text-dark small";
+        infoNote.innerHTML = "<i class='fas fa-info-circle'></i> <strong>Demo mode:</strong> data itahifadhiwa kwenye kivinjari chako kwa sasa. Ili kuunganisha na Google Sheet, weka URL sahihi ya Apps Script (Angalia maelekezo kwenye msimbo).";
+        document.querySelector('.form-card').appendChild(infoNote);
+    }
+    
+    // Guidelines link event (prevent default just for style)
+    document.getElementById('guidelinesLink')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        showToast("Miongozo ya ZanFix: Usalama, uaminifu na huduma bora kwa wateja. Tunathamini ushirikiano wako!", false);
+    });
+</script>
+</body>
+</html>
