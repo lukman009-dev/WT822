@@ -1,0 +1,29 @@
+<!-- manage-allocation.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Course Allocation</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"><link rel="stylesheet" href="css/style.css"></head>
+<body>
+<nav class="navbar navbar-expand-lg bg-white shadow-sm px-3"><div class="container-fluid"><a class="navbar-brand" href="dashboard.html"><img src="images/suza.png" height="40"> SUZA</a><ul class="navbar-nav ms-auto"><li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"><i class="bi bi-person-gear"></i> Options</a><ul class="dropdown-menu"><li><a class="dropdown-item" href="#" id="changePasswordBtn">⚙️ Change Password</a></li><li><a class="dropdown-item" href="#" id="changeProfileBtn">📇 Profile Edit</a></li><li><hr class="dropdown-divider"><li><a class="dropdown-item text-danger" href="#" id="logoutBtn">🚪 Logout</a></li></ul></li></ul></div></nav>
+<div class="container my-4"><div class="d-flex justify-content-between"><h2>📌 Instructor-Course Allocation</h2><button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#allocateModal">📎 Assign Course</button></div><hr><div class="card shadow"><div class="card-body"><table id="allocationTable" class="table"><thead><tr><th>Alloc ID</th><th>Course</th><th>Instructor</th><th>Semester</th></tr></thead><tbody></tbody></table></div></div></div>
+<div class="modal fade" id="allocateModal"><div class="modal-dialog"><div class="modal-content"><div class="modal-header bg-info text-white"><h5>Assign Course to Instructor</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="allocForm"><select id="allocCourse" class="form-select mb-2"><option value="Web Development">Web Development</option><option value="Database">Database Systems</option><option value="Networking">Networking</option></select><select id="allocInstructor" class="form-select mb-2"><option>Dr. Mwinyi</option><option>Prof. Fatma</option><option>Eng. Salim</option></select><input type="text" id="semester" class="form-control mb-2" placeholder="Semester (e.g., Fall 2025)"><button type="submit" class="btn btn-info w-100">Allocate</button></form></div></div></div></div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/main.js"></script>
+<script>
+let allocations = [{id:"A1", course:"Web Development", instructor:"Dr. Mwinyi", semester:"Spring 2025"}];
+let nextAid=2;
+$(document).ready(function(){
+  const table = $('#allocationTable').DataTable({data:allocations, columns:[{data:"id"},{data:"course"},{data:"instructor"},{data:"semester"}], pageLength:5});
+  $('#allocForm').on('submit',function(e){
+    e.preventDefault();
+    const course = $('#allocCourse').val(), instructor = $('#allocInstructor').val(), semester = $('#semester').val().trim()||"Fall 2025";
+    const newAlloc = {id:`A${nextAid++}`, course, instructor, semester};
+    allocations.push(newAlloc); table.row.add(newAlloc).draw();
+    $('#allocForm')[0].reset(); bootstrap.Modal.getInstance(document.getElementById('allocateModal')).hide();
+  });
+});
+</script>
+</body>
+</html>

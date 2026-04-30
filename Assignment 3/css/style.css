@@ -1,0 +1,32 @@
+/* css/style.css */
+body {
+    background: #f4f7fc;
+    font-family: 'Segoe UI', Roboto, system-ui;
+}
+.navbar-brand img {
+    transition: 0.2s;
+}
+.card, .table-responsive, .modal-content {
+    border-radius: 1rem;
+}
+.shadow-hover:hover {
+    box-shadow: 0 0.75rem 1.5rem rgba(0,0,0,0.1);
+    transition: 0.2s;
+}
+.navbar .dropdown-menu {
+    border-radius: 1rem;
+}
+.page-header {
+    border-left: 6px solid #0d6efd;
+    padding-left: 1rem;
+}
+.dataTables_wrapper .dataTables_filter input {
+    border-radius: 2rem;
+    padding: 0.3rem 1rem;
+}
+.btn-round {
+    border-radius: 2rem;
+}
+footer {
+    font-size: 0.85rem;
+}
